@@ -1,0 +1,14 @@
+---
+#Default region for deploying Custom Control Tower: Code Pipeline, Step functions, Lambda, SSM parameters, and StackSets
+region: eu-west-1
+version: 2021-03-15
+
+resources:
+  - name: hooks-taggingcompliancevalidator
+    resource_file: stacks/hooks/TaggingComplianceValidator.template
+    deploy_method: stack_set
+    deployment_targets:
+      organizational_units:
+        - Root
+    regions:
+      - eu-west-1

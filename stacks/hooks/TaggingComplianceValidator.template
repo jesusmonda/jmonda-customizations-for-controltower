@@ -1,0 +1,43 @@
+Resources:
+  # Create Hook execution role
+  MyHookExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: MyHookExecutionRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - resources.cloudformation.amazonaws.com
+                - hooks.cloudformation.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: HookExecutionPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - tag:ListRequiredTags
+                Resource: '*'
+  
+  # Activate the AWS-managed hook type
+  MyHookActivation:
+    Type: AWS::CloudFormation::TypeActivation
+    DependsOn: MyHookExecutionRole
+    Properties:
+      ExecutionRoleArn: !GetAtt MyHookExecutionRole.Arn
+      PublisherId: aws-hooks
+      Type: HOOK
+      TypeName: AWS::TagPolicies::TaggingComplianceValidator
+  
+  # Configure the hook
+  HookTypeConfiguration:
+    Type: AWS::CloudFormation::HookTypeConfig
+    DeletionPolicy: Retain
+    DependsOn: MyHookActivation
+    Properties:
+      TypeArn: !GetAtt MyHookActivation.Arn
+      Configuration: '{"CloudFormationConfiguration":{"HookConfiguration":{"HookInvocationStatus": "ENABLED", "FailureMode": "FAIL", "TargetOperations": ["STACK"], "Properties":{}}}}'
