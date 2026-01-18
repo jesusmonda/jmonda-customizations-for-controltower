@@ -12,6 +12,5 @@ resources:
         - Management
         - Security
         - Sandbox
-        - Root
     regions:
       - eu-west-1
