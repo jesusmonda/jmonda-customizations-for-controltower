@@ -1,5 +1,4 @@
 ---
-#Default region for deploying Custom Control Tower: Code Pipeline, Step functions, Lambda, SSM parameters, and StackSets
 region: eu-west-1
 version: 2021-03-15
 
@@ -9,6 +8,11 @@ resources:
     deploy_method: stack_set
     deployment_targets:
       organizational_units:
-        - Root
+        - Workload
+        - Management
+        - Security
+        - Sandbox
+      accounts:
+        - 132010533830
     regions:
       - eu-west-1
