@@ -12,7 +12,6 @@ resources:
         - Management
         - Security
         - Sandbox
-      accounts:
-        - 132010533830
+        - Root
     regions:
       - eu-west-1
