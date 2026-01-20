@@ -14,14 +14,3 @@ resources:
         - Sandbox
     regions:
       - eu-west-1
-  - name: resourceexplorer-aggregator
-    resource_file: stacks/resourceexplorer/aggregator.template
-    deploy_method: stack_set
-    deployment_targets:
-      organizational_units:
-        - Workload
-        - Management
-        - Security
-        - Sandbox
-    regions:
-      - eu-west-1
