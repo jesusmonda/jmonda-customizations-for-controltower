@@ -1,0 +1,7 @@
+Resources:
+  Index:
+    Type: 'AWS::ResourceExplorer2::Index'
+    Properties:
+      Type: AGGREGATOR
+      Tags:
+        Purpose: ResourceExplorer CFN Stack
