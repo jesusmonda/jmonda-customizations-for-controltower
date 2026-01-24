@@ -40,4 +40,4 @@ Resources:
     DependsOn: MyHookActivation
     Properties:
       TypeArn: !GetAtt MyHookActivation.Arn
-      Configuration: '{"CloudFormationConfiguration":{"HookConfiguration":{"HookInvocationStatus": "ENABLED", "FailureMode": "FAIL", "TargetOperations": ["STACK"], "Properties":{}}}}'
+      Configuration: '{"CloudFormationConfiguration":{"HookConfiguration":{"HookInvocationStatus": "ENABLED", "FailureMode": "FAIL", "TargetOperations": ["STACK"], "Properties":{}}, "StackFilters": {"StackNames": { "Exclude": [ "*AWSControlTower*" ] }}}}'
