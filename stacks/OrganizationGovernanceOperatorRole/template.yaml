@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  Creates IAM role OrganizationGovernanceOperatorRole assumable only by AWS SSO
+  sessions matching arn:aws:sts::971422711983:assumed-role/AWSReservedSSO_AWSAdministratorAccess_*/*
+
+Parameters:
+  MaxSessionDurationSeconds:
+    Type: Number
+    Default: 3600
+    MinValue: 900
+    MaxValue: 43200
+    Description: Max session duration for AssumeRole (seconds).
+
+Resources:
+  OrganizationGovernanceOperatorRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: OrganizationGovernanceOperatorRole
+      Path: /
+      MaxSessionDuration: !Ref MaxSessionDurationSeconds
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: AllowAssumeFromSSOAdminSessionsIn971422711983
+            Effect: Allow
+            Action: sts:AssumeRole
+            Principal:
+              AWS: arn:aws:iam::971422711983:root
+            Condition:
+              StringLike:
+                aws:PrincipalArn:
+                  - arn:aws:iam::971422711983:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_AWSAdministratorAccess_*
+      ManagedPolicyArns:
+       - arn:aws:iam::aws:policy/AdministratorAccess
+
+Outputs:
+  OrganizationGovernanceOperatorRoleArn:
+    Description: ARN of the created role
+    Value: !GetAtt OrganizationGovernanceOperatorRole.Arn
