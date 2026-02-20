@@ -3,8 +3,8 @@ region: eu-west-1
 version: 2021-03-15
 
 resources:
-  - name: hooks-taggingcompliancevalidator
-    resource_file: stacks/hooks/TaggingComplianceValidator.template
+  - name: OrganizationGovernanceOperatorRole
+    resource_file: stacks/OrganizationGovernanceOperatorRole/template.yaml
     deploy_method: stack_set
     deployment_targets:
       organizational_units:
